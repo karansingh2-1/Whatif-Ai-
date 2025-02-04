@@ -75,6 +75,13 @@ def text_to_speech(text):
         if not ELEVENLABS_API_KEY:
             st.error("❌ ElevenLabs API key not found! Please add ELEVENLABS_API_KEY to your .env file.")
             return None
+        # Limit text to 100 words and add closing message
+        words = text.split()
+        if len(words) > 100:
+            limited_text = ' '.join(words[:100])
+            narration_text = f"{limited_text}... You can read further by yourself."
+        else:
+            narration_text = text
 
         # Using Rachel voice (more reliable than the default voice)
         url = "https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream"
